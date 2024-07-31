@@ -1,11 +1,5 @@
 name: 'list-google-enabled-services'
-on:
-  workflow_dispatch:
-     inputs:
-      logLevel:
-        description: 'Log level'     
-        required: true
-        default: 'warning'
+on: workflow_dispatch
 jobs:
   run:
     name: 'list-google-enabled-services'
