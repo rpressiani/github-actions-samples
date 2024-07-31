@@ -39,8 +39,5 @@ jobs:
         env:
           TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID}}
 
-      # - name: Apply Terraform changes
-      #   run: terraform apply tfplan -auto-approve
-
       - name: Clean up Terraform artifacts
         run: rm -f tfplan
