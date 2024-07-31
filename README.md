@@ -13,7 +13,7 @@ This repository contains a collection of sample GitHub Actions workflows that de
 
 This repository includes examples for:
 
-* **[List Google Cloud Services](.github/workflows/list-google-cloud-services.yaml):** Demonstrates how to list all available Google Cloud services using the Google Cloud SDK.
+* **[List Google Cloud Services](.github/workflows/list-google-services.yaml):** Demonstrates how to list all available Google Cloud services using the Google Cloud SDK.
 * **[Terraform Plan](.github/workflows/terraform-plan.yaml):** Shows how to run a Terraform plan to preview infrastructure changes before applying them.
 
 ## Contributing
