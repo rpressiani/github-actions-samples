@@ -33,8 +33,21 @@ resource "google_service_account" "gh_actions" {
 resource "google_project_iam_member" "gh_actions_roles" {
   for_each = toset([
     "roles/serviceusage.serviceUsageConsumer",
+    "roles/iam.serviceAccountAdmin",
   ])
   project = var.project_id
   role    = each.value
   member  = "serviceAccount:${google_service_account.gh_actions.email}"
+}
+
+resource "google_storage_bucket" "gh_actions_tfstate" {
+  name     = "gh-actions-tfstate"
+  location = var.region
+  force_destroy = false
+}
+
+resource "google_storage_bucket_iam_member" "gh_actions_tfstate_roles" {
+  bucket = google_storage_bucket.gh_actions_tfstate.name
+  role   = "roles/storage.admin"
+  member = "serviceAccount:${google_service_account.gh_actions.email}"
 }

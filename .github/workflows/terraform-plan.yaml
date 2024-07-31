@@ -1,0 +1,43 @@
+name: terraform-plan
+on: pull_request
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    defaults:
+      run:
+        working-directory: terraform/
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2.1.3
+        with:
+          token_format: 'access_token'
+          workload_identity_provider: ${{ secrets.PROVIDER_NAME }} # this is the output provider_name from the TF module
+          service_account: ${{ secrets.SA_EMAIL }} # this is a SA email configured using the TF module with access to YOUR-GCS-BUCKET
+
+      - name: Set up gcloud Cloud SDK environment
+        uses: google-github-actions/setup-gcloud@v2.1.0
+          
+      - name: HashiCorp - Setup Terraform
+        uses: hashicorp/setup-terraform@v3.1.1
+
+      - name: Validate Terraform configuration
+        run: terraform init
+
+      - name: Validate Terraform configuration
+        run: terraform validate
+
+      - name: Plan Terraform deployment
+        run: terraform plan -out=tfplan
+        env:
+          TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID}}
+
+      - name: Clean up Terraform artifacts
+        run: rm -f tfplan
