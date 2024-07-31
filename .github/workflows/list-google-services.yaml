@@ -1,4 +1,4 @@
-name: 'List Google Enabled Services'
+name: 'list-google-enabled-services'
 on:
   workflow_dispatch:
      inputs:
@@ -9,7 +9,7 @@ on:
   pull_request:
 jobs:
   run:
-    name: 'example to list bucket contents'
+    name: 'list-google-enabled-services'
     permissions:
       id-token: write
       contents: read

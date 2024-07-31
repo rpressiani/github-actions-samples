@@ -29,3 +29,12 @@ module "gh_oidc" {
 resource "google_service_account" "gh_actions" {
   account_id = "gh-actions"
 }
+
+resource "google_project_iam_member" "gh_actions_roles" {
+  for_each = toset([
+    "roles/serviceusage.serviceUsageConsumer",
+  ])
+  project = var.project_id
+  role    = each.value
+  member  = "serviceAccount:${google_service_account.gh_actions.email}"
+}
