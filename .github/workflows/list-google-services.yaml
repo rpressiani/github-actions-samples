@@ -1,12 +1,5 @@
 name: 'list-google-enabled-services'
-on:
-  workflow_dispatch:
-     inputs:
-      logLevel:
-        description: 'Log level'     
-        required: true
-        default: 'warning'
-  pull_request:
+on: workflow_dispatch
 jobs:
   run:
     name: 'list-google-enabled-services'
@@ -15,8 +8,8 @@ jobs:
       contents: read
     runs-on: 'ubuntu-latest'
     steps:
-    - id: 'auth'
-      uses: 'google-github-actions/auth@v1'
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2.1.3
       with:
         token_format: 'access_token'
         workload_identity_provider: ${{ secrets.PROVIDER_NAME }} # this is the output provider_name from the TF module
