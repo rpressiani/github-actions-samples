@@ -3,6 +3,7 @@ on: pull_request
 jobs:
   plan:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -35,6 +36,8 @@ jobs:
 
       - name: Plan Terraform deployment
         run: terraform plan -out=tfplan
+        env:
+          TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID}}
 
       # - name: Apply Terraform changes
       #   run: terraform apply tfplan -auto-approve
