@@ -1,4 +1,11 @@
 name: 'List Google Enabled Services'
+on:
+  workflow_dispatch:
+     inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
 jobs:
   run:
     name: 'example to list bucket contents'
