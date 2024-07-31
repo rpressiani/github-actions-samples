@@ -24,8 +24,11 @@ jobs:
       - name: Set up gcloud Cloud SDK environment
         uses: google-github-actions/setup-gcloud@v2.1.0
           
-      - name: Initialize Terraform and fmt
-        uses: hashicorp/setup-terraform@v1
+      - name: HashiCorp - Setup Terraform
+        uses: hashicorp/setup-terraform@v3.1.1
+
+      - name: Validate Terraform configuration
+        run: terraform init
 
       - name: Validate Terraform configuration
         run: terraform validate
