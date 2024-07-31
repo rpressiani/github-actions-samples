@@ -1,0 +1,21 @@
+name: 'List Google Enabled Services'
+jobs:
+  run:
+    name: 'example to list bucket contents'
+    permissions:
+      id-token: write
+      contents: read
+    runs-on: 'ubuntu-latest'
+    steps:
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        token_format: 'access_token'
+        workload_identity_provider: ${{ secrets.PROVIDER_NAME }} # this is the output provider_name from the TF module
+        service_account: ${{ secrets.SA_EMAIL }} # this is a SA email configured using the TF module with access to YOUR-GCS-BUCKET
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v0.3.0
+    - name: Set credential_file
+      run: gcloud auth login --cred-file=${{steps.auth.outputs.credentials_file_path}}
+    - name: Run gcloud
+      run: gcloud compute instances list --zones us-east4-c
