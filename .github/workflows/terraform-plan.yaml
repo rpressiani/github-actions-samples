@@ -1,5 +1,5 @@
 name: terraform-plan
-on: pull_request
+on: workflow_dispatch
 jobs:
   plan:
     runs-on: ubuntu-latest
