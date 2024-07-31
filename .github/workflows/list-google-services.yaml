@@ -26,4 +26,4 @@ jobs:
     - name: Set credential_file
       run: gcloud auth login --cred-file=${{steps.auth.outputs.credentials_file_path}}
     - name: Run gcloud
-      run: gcloud compute instances list --zones us-east4-c
+      run: gcloud services list
